@@ -22,3 +22,39 @@ def get_input():
         columns.append(col)
 
     return columns, k, m, n
+
+
+def check_goal(state):
+    for i in state:
+        numbers = []
+        colors = []
+        # there is no problem if a column is empty or it's success when all columns are empty
+        if not i:
+            continue
+        for j in i:
+            number = int(j[0:len(j) - 1])
+            numbers.append(number)
+            color = j[len(j) - 1:]
+            colors.append(color)
+        # print(numbers)
+        if numbers != sorted(numbers, reverse=True):
+            return False
+        if colors.count(colors[0]) != len(colors):
+            return False
+    return True
+
+
+def find_lowest_card(column):
+    lowest_card = column[len(column) - 1]
+    card_number = int(lowest_card[:len(lowest_card) - 1])
+    return card_number, lowest_card
+
+
+def find_other_card_number(column):
+    if not column:
+        other_card_number = 99999
+    else:
+        other_lowest_card = column[len(column) - 1]
+        other_card_number = int(other_lowest_card[:len(other_lowest_card) - 1])
+    return other_card_number
+
