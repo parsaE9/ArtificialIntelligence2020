@@ -8,6 +8,8 @@ def get_input():
 
     for i in range(0, k):
         input_ = input("column {}: ".format(i + 1))
+        if input_.__contains__('#'):
+            input_ = ''
         arr.append(input_)
 
     # creating 2d array
@@ -28,7 +30,7 @@ def check_goal(state):
     for i in state:
         numbers = []
         colors = []
-        # there is no problem if a column is empty or it's success when all columns are empty
+        # there is no problem if a column is empty. it's success when all columns are empty
         if not i:
             continue
         for j in i:

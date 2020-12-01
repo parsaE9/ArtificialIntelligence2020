@@ -12,16 +12,11 @@ class BFS:
         self.frontier = []  # frontier list
         self.explored = []  # explored list
         print(columns)
-        self.game_initial_state(columns)  # running the game
+        self.game_loop(columns)  # running the game
 
-    def game_initial_state(self, state):
-        self.frontier.append(copy.deepcopy(state))
-        if check_goal(state):
-            print("SUCCESS")
-            return
-        self.game_loop()
-
-    def game_loop(self):
+    def game_loop(self, initial_state):
+        self.frontier.append(copy.deepcopy(initial_state))
+        check_goal(initial_state)
         while not self.goalFound and self.frontier:
             self.expand()
 
@@ -36,6 +31,7 @@ class BFS:
         state = copy.deepcopy(self.frontier.pop(0))
         self.explored.append(copy.deepcopy(state))
         for i in state:
+            # print("expand")
             if not i:
                 continue
             index_i = state.index(i)
@@ -47,9 +43,11 @@ class BFS:
                     index_j = new_state.index(j)
                     new_state[index_j].append(lowest_card)
                     new_state[index_i].pop()
-                    if self.explored.__contains__(new_state):
+                    if self.explored.__contains__(new_state) or self.frontier.__contains__(new_state):
+                        print("tekrari")
                         continue
-                    self.frontier.append(new_state)
+                    self.frontier.append(copy.deepcopy(new_state))
                     if check_goal(new_state):
                         self.goalFound = True
                         return
+
