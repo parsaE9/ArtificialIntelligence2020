@@ -26,7 +26,7 @@ def get_input():
     return columns, k, m, n
 
 
-def check_goal(state):
+def goal_test(state):
     for i in state:
         numbers = []
         colors = []
@@ -60,3 +60,41 @@ def find_other_card_number(column):
         other_card_number = int(other_lowest_card[:len(other_lowest_card) - 1])
     return other_card_number
 
+
+def check_duplicate_state(new_state, frontier, explored):
+    for node in frontier:
+        if new_state == node.state:
+            return True
+    for node in explored:
+        if new_state == node.state:
+            return True
+    return False
+
+
+def success(goal, initial_state, count_frontier, count_explored):
+    moves = [goal.move]
+    previous_node = goal.father
+    while previous_node.move:
+        moves.append(previous_node.move)
+        previous_node = previous_node.father
+    moves.reverse()
+    print("#############################################################")
+    print("#############################################################")
+    print("SUCCESS!")
+    print("initial state : {}".format(initial_state))
+    print("Goal state : {}".format(goal.state))
+    print("Goal depth : {}".format(goal.depth))
+    print("number of expanded nodes : {}".format(count_explored))
+    print("number of generated nodes : {}".format(count_frontier + count_explored))
+    print("number of generated nodes (not yet expanded) : {}".format(count_frontier))
+    print("actions in each step:")
+    step = 1
+    for move in moves:
+        print("step {} : {}".format(step, move))
+        step += 1
+
+
+def fail():
+    print("#############################################################")
+    print("#############################################################")
+    print("FAIL!")
