@@ -1,5 +1,5 @@
 def get_input():
-    input_ = input("enter k m n : ")
+    input_ = input("- ENTER k m n : ")
     k = int(input_.split(" ")[0])
     m = int(input_.split(" ")[1])
     n = int(input_.split(" ")[2])
@@ -7,7 +7,7 @@ def get_input():
     arr = []
 
     for i in range(0, k):
-        input_ = input("column {}: ".format(i + 1))
+        input_ = input("- COLUMN {}: ".format(i + 1))
         if input_.__contains__('#'):
             input_ = ''
         arr.append(input_)
@@ -23,7 +23,7 @@ def get_input():
                 col.append(split_arr[j])
         columns.append(col)
 
-    return columns, k, m, n
+    return columns
 
 
 def goal_test(state):
@@ -80,21 +80,23 @@ def success(goal, initial_state, count_frontier, count_explored):
     moves.reverse()
     print("#############################################################")
     print("#############################################################")
-    print("SUCCESS!")
-    print("initial state : {}".format(initial_state))
-    print("Goal state : {}".format(goal.state))
-    print("Goal depth : {}".format(goal.depth))
-    print("number of expanded nodes : {}".format(count_explored))
-    print("number of generated nodes : {}".format(count_frontier + count_explored))
-    print("number of generated nodes (not yet expanded) : {}".format(count_frontier))
-    print("actions in each step:")
+    print("- SUCCESS!")
+    print("- initial state : {}".format(initial_state))
+    print("- Goal state : {}".format(goal.state))
+    print("- Goal depth : {}".format(goal.depth))
+    print("- number of expanded nodes : {}".format(count_explored))
+    print("- number of generated nodes (expanded + generated) : {}".format(count_frontier + count_explored - 1))
+    print("- number of generated nodes (not yet expanded) : {}".format(count_frontier))
+    print("- actions in each step:")
     step = 1
     for move in moves:
-        print("step {} : {}".format(step, move))
+        print("- step {} : {}".format(step, move))
         step += 1
+    exit()
 
 
 def fail():
     print("#############################################################")
     print("#############################################################")
-    print("FAIL!")
+    print("- FAIL!")
+    exit()

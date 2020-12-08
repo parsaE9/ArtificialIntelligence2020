@@ -5,8 +5,9 @@ import copy
 
 
 if __name__ == "__main__":
-    initial_state, k, m, n = get_input()
 
-    # BFS(initial_state, k, m, n)
-    IDS(initial_state, k, m, n)
-    # A_STAR(initial_state, k, m, n)
+    initial_state = get_input()
+
+    # BFS(initial_state)
+    IDS(initial_state)
+    # A_STAR(initial_state)

@@ -6,32 +6,24 @@ import copy
 # goal test is applied at node generation
 class BFS:
 
-    frontier = []
-    explored = []
-    goal = None
-
-    def __init__(self, initial_state, k, m, n):
+    def __init__(self, initial_state):
         self.initial_state = initial_state
-        self.count_columns = k
-        self.count_color = m
-        self.count_cards = n
-        self.game_loop(initial_state)  # running the game
+        self.frontier = []
+        self.explored = []
+        self.goal = None
+        self.program_loop(initial_state)
 
-    def game_loop(self, initial_state):
+    def program_loop(self, initial_state):
         node = Node(copy.deepcopy(initial_state), None, "", 0)
         self.frontier.append(node)
         if goal_test(node.state):
             self.goal = node
-
         while not self.goal and self.frontier:
-            # print("running")
             self.expand()
-
         if self.goal:
             success(self.goal, self.initial_state, len(self.frontier), len(self.explored))
         else:
             fail()
-        return
 
     def expand(self):
         father = self.frontier.pop(0)
