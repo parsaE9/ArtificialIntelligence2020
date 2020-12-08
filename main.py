@@ -1,13 +1,16 @@
-from functions import get_input
+from functions import get_input, get_initial_depth
 from p1 import BFS
 from p2 import IDS
-import copy
 
 
 if __name__ == "__main__":
 
-    initial_state = get_input()
+    initial_state, algorithm = get_input()
 
-    # BFS(initial_state)
-    IDS(initial_state)
-    # A_STAR(initial_state)
+    if algorithm == 1:
+        BFS(initial_state)
+    elif algorithm == 2:
+        IDS(initial_state, get_initial_depth())
+    else:
+        pass
+        # A_STAR(initial_state)

@@ -1,4 +1,5 @@
 def get_input():
+    algorithm = input("press 1 for BFS or 2 for IDS or 3 for A_STAR: ")
     input_ = input("- ENTER k m n : ")
     k = int(input_.split(" ")[0])
     m = int(input_.split(" ")[1])
@@ -23,7 +24,14 @@ def get_input():
                 col.append(split_arr[j])
         columns.append(col)
 
-    return columns
+    return columns, int(algorithm)
+
+
+def get_initial_depth():
+    depth = input('- enter initial depth or press enter to skip and default depth is 0: ')
+    if depth != '':
+        return int(depth)
+    return 0
 
 
 def goal_test(state):
@@ -74,9 +82,10 @@ def check_duplicate_state(new_state, frontier, explored):
 def success(goal, initial_state, count_frontier, count_explored):
     moves = [goal.move]
     previous_node = goal.father
-    while previous_node.move:
-        moves.append(previous_node.move)
-        previous_node = previous_node.father
+    if previous_node:
+        while previous_node.move:
+            moves.append(previous_node.move)
+            previous_node = previous_node.father
     moves.reverse()
     print("#############################################################")
     print("#############################################################")
@@ -85,12 +94,12 @@ def success(goal, initial_state, count_frontier, count_explored):
     print("- Goal state : {}".format(goal.state))
     print("- Goal depth : {}".format(goal.depth))
     print("- number of expanded nodes : {}".format(count_explored))
-    print("- number of generated nodes (expanded + generated) : {}".format(count_frontier + count_explored - 1))
+    print("- number of generated nodes (expanded + generated) : {}".format(count_frontier + count_explored))
     print("- number of generated nodes (not yet expanded) : {}".format(count_frontier))
     print("- actions in each step:")
     step = 1
     for move in moves:
-        print("- step {} : {}".format(step, move))
+        print("\t- step {} : {}".format(step, move))
         step += 1
     exit()
 
