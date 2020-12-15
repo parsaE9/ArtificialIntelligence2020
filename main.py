@@ -1,6 +1,7 @@
 from functions import get_input, get_initial_depth
 from p1 import BFS
 from p2 import IDS
+from p3 import A_STAR
 
 
 if __name__ == "__main__":
@@ -12,5 +13,4 @@ if __name__ == "__main__":
     elif algorithm == 2:
         IDS(initial_state, get_initial_depth())
     else:
-        pass
-        # A_STAR(initial_state)
+        A_STAR(initial_state)

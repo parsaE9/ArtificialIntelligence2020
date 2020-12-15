@@ -93,9 +93,13 @@ def success(goal, initial_state, count_frontier, count_explored):
     print("- initial state : {}".format(initial_state))
     print("- Goal state : {}".format(goal.state))
     print("- Goal depth : {}".format(goal.depth))
-    print("- number of expanded nodes : {}".format(count_explored))
-    print("- number of generated nodes (expanded + generated) : {}".format(count_frontier + count_explored))
-    print("- number of generated nodes (not yet expanded) : {}".format(count_frontier))
+    if count_frontier == -1:
+        print("- number of generated nodes (previous limit nodes are not count) : {}".format(count_explored))
+        print("- number of expanded nodes (previous limit nodes are not count) : {}".format(count_explored - 1))
+    else:
+        print("- number of expanded nodes : {}".format(count_explored))
+        print("- number of generated nodes (expanded + generated) : {}".format(count_frontier + count_explored))
+        print("- number of generated nodes (not yet expanded) : {}".format(count_frontier))
     print("- actions in each step:")
     step = 1
     for move in moves:
@@ -109,3 +113,24 @@ def fail():
     print("#############################################################")
     print("- FAIL!")
     exit()
+
+
+def calculate_heuristic(state):
+    heuristic = 0
+    for i in state:
+        numbers = []
+        colors = []
+        # there is no problem if a column is empty. it's success when all columns are empty
+        if not i:
+            continue
+        for j in i:
+            number = int(j[0:len(j) - 1])
+            numbers.append(number)
+            color = j[len(j) - 1:]
+            colors.append(color)
+        if len(numbers) > 1:
+            for k in range(0, len(numbers) - 1):
+                if numbers[k] <= numbers[k + 1]:
+                    heuristic += 1
+        heuristic += len(set(colors)) - 1
+    return heuristic

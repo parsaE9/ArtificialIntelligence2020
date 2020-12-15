@@ -3,29 +3,25 @@ from node import Node
 import copy
 
 
-# goal test is applied at node expansion
 class IDS:
 
     def __init__(self, initial_state, initial_depth):
         self.initial_state = initial_state
-        self.initial_depth = initial_depth  # initial depth of IDS
+        self.initial_depth = initial_depth
         self.count_generated_nodes = 0
         self.goal = None
         self.ids()
 
     def ids(self):
         while True:
-            print(self.initial_depth)
             initial_node = self.restart()
             self.dls(self.initial_depth, initial_node)
             self.initial_depth += 1
 
-    # TODO: how to handle failure?
-
     def dls(self, limit, node):
         if goal_test(node.state):
             self.goal = node
-            success(self.goal, self.initial_state, 0, self.count_generated_nodes)
+            success(self.goal, self.initial_state, -1, self.count_generated_nodes)
         if node.depth == limit:
             return
         state = copy.deepcopy(node.state)
