@@ -9,16 +9,15 @@ class A_STAR:
         self.initial_state = initial_state
         self.frontier = []
         self.explored = []
-        self.goal = None
-        self.index_next = 0
-        self.costs = []
+        self.index_next = 0     # index of next node to expand in frontier list
+        self.costs = []         # cost of each node
         self.program_loop(initial_state)
 
     def program_loop(self, initial_state):
         node = Node(copy.deepcopy(initial_state), None, "", 0)
         self.frontier.append(node)
         if goal_test(node.state):
-            success(self.goal, self.initial_state, len(self.frontier), len(self.explored))
+            success(node, self.initial_state, len(self.frontier), len(self.explored))
         while self.frontier:
             self.expand()
         fail()
@@ -27,7 +26,7 @@ class A_STAR:
         father = self.frontier.pop(self.index_next)
         self.explored.append(father)
         if goal_test(father.state):
-            success(self.goal, self.initial_state, len(self.frontier), len(self.explored))
+            success(father, self.initial_state, len(self.frontier), len(self.explored))
         state = copy.deepcopy(father.state)
         for i in state:
             if not i:
@@ -42,7 +41,6 @@ class A_STAR:
                     new_state[index_j].append(lowest_card)
                     new_state[index_i].pop()
                     if check_duplicate_state(new_state, self.frontier, self.explored):
-                        print("duplicate")
                         continue
                     new_node_depth = father.depth + 1
                     new_node_move = "put card " + lowest_card + " from column " + str(index_i + 1) + " on column " + str(index_j + 1)
@@ -51,7 +49,7 @@ class A_STAR:
                     self.frontier.append(new_node)
                     self.costs.append(new_node.cost)
                     self.costs.sort()
-        if not self.frontier:
+        if self.frontier:
             for i in range(0, len(self.frontier)):
                 if self.costs[0] == self.frontier[i].cost:
                     self.index_next = i
