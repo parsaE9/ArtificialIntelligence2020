@@ -35,15 +35,20 @@ def create_grids(inpt, colors, n):
         for j in grid:
             possible_colors = []
             possible_numbers = []
+            color_degree = 0
+            number_degree = 0
             color = j[len(j) - 1]
             number = j[:len(j) - 1]
             if color == '#':
                 color = None
                 possible_colors = colors
+                color_degree = None
             if number == '*':
                 number = None
                 possible_numbers = numbers
-            row.append(Grid(color, number, counter_row, counter_column, possible_colors, possible_numbers))
+                number_degree = None
+            row.append(Grid(color, number, counter_row, counter_column, possible_colors, possible_numbers,
+                            color_degree, number_degree))
             counter_column += 1
         counter_row += 1
 
