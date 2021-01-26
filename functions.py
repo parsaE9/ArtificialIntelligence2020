@@ -26,7 +26,6 @@ def create_grids(inpt, colors, n):
     for i in range(0, n):
         numbers.append(int(i) + 1)
     numbers.reverse()
-
     counter_row = 0
 
     for i in inpt:
@@ -52,11 +51,14 @@ def create_grids(inpt, colors, n):
             counter_column += 1
         counter_row += 1
 
-    find_neighbors(row)
+    find_color_neighbors(row)
+    find_number_neighbors(row)
+    find_color_degree(row)
+    find_number_degree(row)
     return row
 
 
-def find_neighbors(row):
+def find_color_neighbors(row):
     for grid in row:
         c = grid.column
         r = grid.row
@@ -73,3 +75,47 @@ def find_neighbors_color(neighbors):
         if neighbor.color is not None:
             colors.append(neighbor.color)
     return colors
+
+
+def find_color_degree(row):
+    for grid in row:
+        degree = 0
+        if grid.color_degree is not None:
+            grid.color_degree = 0
+            continue
+        for i in grid.neighbors:
+            if i.color is None:
+                degree += 1
+        grid.color_degree = degree
+
+
+def find_number_degree(row):
+    for grid in row:
+        r = grid.row
+        c = grid.column
+        degree = 0
+        if grid.number_degree is not None:
+            grid.number_degree = 0
+            continue
+        for i in row:
+            if (i.column == c and i.row != r or i.column != c and i.row == r) and i.number is None:
+                degree += 1
+        grid.number_degree = degree
+
+
+def find_number_neighbors(row):
+    for grid in row:
+        r = grid.row
+        c = grid.column
+        for i in row:
+            if i.column == c and i.row != r or i.column != c and i.row == r:
+                grid.number_neighbors.append(i)
+
+
+def assign_value_to_colors(colors):
+    value = len(colors)
+    dic = {}
+    for color in colors:
+        dic[color] = value
+        value -= 1
+    return value
