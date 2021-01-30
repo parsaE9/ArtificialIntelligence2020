@@ -1,6 +1,3 @@
-from grid import Grid
-
-
 def get_input():
     input_ = input("- ENTER m n : ")
     m = int(input_.split(" ")[0])
@@ -18,44 +15,6 @@ def get_input():
         rows.append(row)
 
     return m, n, colors, rows
-
-
-def create_grids(inpt, colors, n):
-    row = []
-    numbers = []
-    for i in range(0, n):
-        numbers.append(int(i) + 1)
-    numbers.reverse()
-    counter_row = 0
-
-    for i in inpt:
-        grid = i.split(' ')
-        counter_column = 0
-        for j in grid:
-            possible_colors = []
-            possible_numbers = []
-            color_degree = 0
-            number_degree = 0
-            color = j[len(j) - 1]
-            number = j[:len(j) - 1]
-            if color == '#':
-                color = None
-                possible_colors = colors
-                color_degree = None
-            if number == '*':
-                number = None
-                possible_numbers = numbers
-                number_degree = None
-            row.append(Grid(color, number, counter_row, counter_column, possible_colors, possible_numbers,
-                            color_degree, number_degree))
-            counter_column += 1
-        counter_row += 1
-
-    find_color_neighbors(row)
-    find_number_neighbors(row)
-    find_color_degree(row)
-    find_number_degree(row)
-    return row
 
 
 def find_color_neighbors(row):
@@ -80,7 +39,7 @@ def find_neighbors_color(neighbors):
 def find_color_degree(row):
     for grid in row:
         degree = 0
-        if grid.color_degree is not None:
+        if grid.color is not None:
             grid.color_degree = 0
             continue
         for i in grid.neighbors:
@@ -94,7 +53,7 @@ def find_number_degree(row):
         r = grid.row
         c = grid.column
         degree = 0
-        if grid.number_degree is not None:
+        if grid.number is not None:
             grid.number_degree = 0
             continue
         for i in row:
@@ -118,4 +77,46 @@ def assign_value_to_colors(colors):
     for color in colors:
         dic[color] = value
         value -= 1
-    return value
+    return dic
+
+
+def possible_actions(number, numbers, color, colors):
+    if number is None and color is None:
+        return calculate_possible_actions(numbers, colors)
+    elif number is None and color is not None:
+        return calculate_possible_actions(numbers, [color])
+    elif number is not None and color is None:
+        return calculate_possible_actions([number], colors)
+    else:
+        return []
+
+
+def calculate_possible_actions(numbers, colors):
+    actions = []
+    for i in numbers:
+        for j in colors:
+            actions.append(str(i) + j)
+    return actions
+
+
+def calculate_possible_values(arr1, arr2):
+    arr = []
+    for i in arr1:
+        if i not in arr2:
+            arr.append(i)
+    return arr
+
+
+def print_result(result, grids=None, n=0):
+    if result == 'fail':
+        print("\n\nfail!")
+        quit()
+    print('\n\nsuccess\n\n')
+    i = 1
+    for grid in grids:
+        print(str(grid.number) + grid.color, end="")
+        if i % n:
+            print(" | ", end="")
+        else:
+            print()
+        i += 1
