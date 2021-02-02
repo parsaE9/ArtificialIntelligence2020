@@ -1,0 +1,18 @@
+- python version 3.8
+
+BFS:
+    - goal-test at code generation
+
+IDS:
+    - goal-test at code expansion
+    - we don't have frontier
+    - infinity recursive if tree search applied? no it doesn't happen
+    - how to print count explored and generated node? count duplicates or not?
+    - is the number of expanded and generated nodes same?
+    - it doesn't have failure
+    - generated nodes of previous steps are not count
+
+A_STAR:
+    - goal-test at code expansion
+    - node.depth can be h(n)
+    - heuristic is the sum of unsorted adjacent numbers & (count diff colors - 1)

@@ -5,7 +5,6 @@ __pycache__/
 .idea/
 parsetab.py
 parser.out
-*.txt
 Parser1.py
 Parser1.5.py
 Parser2.py
