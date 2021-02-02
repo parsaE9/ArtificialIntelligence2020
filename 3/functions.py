@@ -77,6 +77,7 @@ def predict_poet(hemistich, h3, h2, h1, e, poet1, poet2, poet3):
         backoff[0] *= calculate_backoff(word, previous, poet1, h3, h2, h1, e)
         backoff[1] *= calculate_backoff(word, previous, poet2, h3, h2, h1, e)
         backoff[2] *= calculate_backoff(word, previous, poet3, h3, h2, h1, e)
+        previous = word
 
     poet = max(backoff)
     if poet == backoff[0]:
@@ -102,6 +103,4 @@ def verify_test_set(h3, h2, h1, e, poet1, poet2, poet3, test_set_address):
     file.close()
 
     precision = str(100 * correct_predictions / total_lines) + ' %'
-    print(correct_predictions)
-    print(total_lines)
     print(precision)

@@ -4,8 +4,8 @@ from poet import Poet
 
 if __name__ == "__main__":
 
-    h3 = 0.009
-    h2 = 0.99
+    h3 = 0.9
+    h2 = 0.09
     h1 = 0.001
     e = 0.002
 
