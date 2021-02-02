@@ -103,4 +103,4 @@ def verify_test_set(h3, h2, h1, e, poet1, poet2, poet3, test_set_address):
     file.close()
 
     precision = str(100 * correct_predictions / total_lines) + ' %'
-    print(precision)
+    print('precision : ', precision)

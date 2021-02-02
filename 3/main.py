@@ -5,9 +5,9 @@ from poet import Poet
 if __name__ == "__main__":
 
     h3 = 0.9
-    h2 = 0.09
+    h2 = 0.099
     h1 = 0.001
-    e = 0.002
+    e = 0.00002
 
     ferdowsi = Poet('train_set//ferdowsi_train.txt', 'ferdowsi')
     hafez = Poet('train_set//hafez_train.txt', 'hafez')
